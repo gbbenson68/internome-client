@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import './App.scss'
 import { Route } from 'react-router-dom'
 
@@ -33,7 +33,7 @@ class App extends Component {
     const { alerts, user } = this.state
 
     return (
-      <React.Fragment>
+      <Fragment>
         <Header user={user} />
         {alerts.map((alert, index) => (
           <Alert key={index} dismissible variant={alert.type}>
@@ -56,7 +56,7 @@ class App extends Component {
             <ChangePassword alert={this.alert} user={user} />
           )} />
         </main>
-      </React.Fragment>
+      </Fragment>
     )
   }
 }

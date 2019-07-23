@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Link } from 'react-router-dom'
 
 import './Header.scss'
@@ -11,16 +11,16 @@ const authenticatedOptions = (
 )
 
 const unauthenticatedOptions = (
-  <React.Fragment>
+  <Fragment>
     <Link to="/sign-up">Sign Up</Link>
     <Link to="/sign-in">Sign In</Link>
-  </React.Fragment>
+  </Fragment>
 )
 
 const alwaysOptions = (
-  <React.Fragment>
+  <Fragment>
     <Link to="/">Home</Link>
-  </React.Fragment>
+  </Fragment>
 )
 
 const Header = ({ user }) => (
