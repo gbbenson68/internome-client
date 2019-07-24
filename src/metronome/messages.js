@@ -6,5 +6,7 @@ export default {
   deleteProfileSuccess: 'Profile successfully deleted!',
   deleteProfileFailure: 'Profile deletion failed, please try again.',
   listProfilesSuccess: '',
-  listProfilesFailure: 'Profiles could not be retrieved, please try again.'
+  listProfilesFailure: 'Profiles could not be retrieved, please try again.',
+  showProfileSuccess: '',
+  showProfileFailure: 'Profile could not be retrieved, please try again.'
 }

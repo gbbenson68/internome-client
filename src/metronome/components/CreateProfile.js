@@ -9,9 +9,9 @@ const CreateProfile = (props) => {
   //       React thinks that the individual properties are uncontrolled!!
   const [profile, setProfile] = useState({
     name: '',
-    minTempo: 40,
-    maxTempo: 240,
-    duration: 30
+    minTempo: '',
+    maxTempo: '',
+    duration: ''
   })
 
   const handleChange = (event) => {
@@ -27,9 +27,9 @@ const CreateProfile = (props) => {
       headers: { 'Authorization': `Bearer ${props.user.token}` },
       data: { profile: profile }
     })
-      .then((response) => props.history.push(`/profiles/${response.data.profile._id}`))
+      .then(response => props.history.push(`/profiles/${response.data.profile._id}`))
       .then(() => props.alert(messages.createProfileSuccess, 'success'))
-      .catch((error) => {
+      .catch(error => {
         console.error(error)
         props.alert(messages.createProfileFailure, 'danger')
         setProfile({})
@@ -86,7 +86,7 @@ const CreateProfile = (props) => {
         required
       />
 
-      <button type="submit">Save</button>
+      <button type="submit">Submit</button>
       <Link to='/profiles'>
         <button>Cancel</button>
       </Link>

@@ -10,15 +10,14 @@ const DisplayProfiles = (props) => {
   // console.log(props.user.token)
 
   useEffect(() => {
-    // console.log(props)
     axios({
       url: `${apiUrl}/profiles`,
       method: 'GET',
       headers: { 'Authorization': `Bearer ${props.user.token}` }
     })
       .then(response => setProfiles(response.data.profiles))
-      .catch((error) => {
-        console.error(error.message)
+      .catch(error => {
+        console.error(error)
         props.alert(messages.listProfilesFailure, 'danger')
         setProfiles([])
       })

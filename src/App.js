@@ -10,7 +10,10 @@ import SignOut from './auth/components/SignOut'
 import ChangePassword from './auth/components/ChangePassword'
 
 import DisplayProfiles from './metronome/components/DisplayProfiles'
+import DisplayProfile from './metronome/components/DisplayProfile'
 import CreateProfile from './metronome/components/CreateProfile'
+import DeleteProfile from './metronome/components/DeleteProfile'
+import UpdateProfile from './metronome/components/UpdateProfile'
 
 import Alert from 'react-bootstrap/Alert'
 
@@ -58,16 +61,21 @@ class App extends Component {
           <AuthenticatedRoute user={user} path='/change-password' render={() => (
             <ChangePassword alert={this.alert} user={user} />
           )} />
-          <AuthenticatedRoute user={user} exact path='/profiles' render={() =>
-            <DisplayProfiles alert={this.alert} user={user} />}
-          />
           <AuthenticatedRoute user={user} exact path='/profiles/create' render={() =>
             <CreateProfile alert={this.alert} user={user} />}
           />
-          {/*
-          <Route exact path='/profiles/:id' user={user} alert={this.alert} component={}/>
-          <Route exact path='/profiles/:id/update' user={user} alert={this.alert} component={}/>
-          */}
+          <AuthenticatedRoute user={user} exact path='/profiles/:id/delete' render={() =>
+            <DeleteProfile alert={this.alert} user={user} />}
+          />
+          <AuthenticatedRoute user={user} exact path='/profiles/:id/update' render={() =>
+            <UpdateProfile alert={this.alert} user={user} />}
+          />
+          <AuthenticatedRoute user={user} exact path='/profiles/:id' render={() =>
+            <DisplayProfile alert={this.alert} user={user} />}
+          />
+          <AuthenticatedRoute user={user} exact path='/profiles' render={() =>
+            <DisplayProfiles alert={this.alert} user={user} />}
+          />
         </main>
       </Fragment>
     )
