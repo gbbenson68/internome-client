@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom'
 import './Header.scss'
 
 const authenticatedOptions = (
-  <React.Fragment>
+  <Fragment>
     <Link to="/change-password">Change Password</Link>
     <Link to="/sign-out">Sign Out</Link>
-  </React.Fragment>
+  </Fragment>
 )
 
 const unauthenticatedOptions = (
