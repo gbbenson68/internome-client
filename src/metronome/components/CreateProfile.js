@@ -5,7 +5,14 @@ import axios from 'axios'
 import messages from '../messages'
 
 const CreateProfile = (props) => {
-  const [profile, setProfile] = useState({})
+  // NOTE: We need to set the COMPLETE list of properties here or else
+  //       React thinks that the individual properties are uncontrolled!!
+  const [profile, setProfile] = useState({
+    name: '',
+    minTempo: 40,
+    maxTempo: 240,
+    duration: 30
+  })
 
   const handleChange = (event) => {
     setProfile({ ...profile, [event.target.name]: event.target.value })
