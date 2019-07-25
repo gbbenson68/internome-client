@@ -28,7 +28,10 @@ const DisplayProfile = (props) => {
       <p>Minimum Tempo: {profile.minTempo}</p>
       <p>Maximum Tempo: {profile.maxTempo}</p>
       <p>Duration: {profile.duration}</p>
-      <Link to={`/profiles/${props.match.params.id}/delete`}>
+      <Link to={`/profiles/${props.match.params.id}/update`}>
+        <button>Edit</button>
+      </Link>
+      <Link to={`/profiles/${props.match.params.id}/delete`} user={props.user}>
         <button>Delete</button>
       </Link>
       <Link to='/profiles'>Back to all profiles</Link>
