@@ -15,6 +15,7 @@ import DisplayProfile from './metronome/components/DisplayProfile'
 import CreateProfile from './metronome/components/CreateProfile'
 import DeleteProfile from './metronome/components/DeleteProfile'
 import UpdateProfile from './metronome/components/UpdateProfile'
+import DisplayInternome from './metronome/components/DisplayInternome'
 
 import Alert from 'react-bootstrap/Alert'
 
@@ -81,6 +82,9 @@ class App extends Component {
           />
           <AuthenticatedRoute user={user} exact path='/profiles' render={() =>
             <DisplayProfiles alert={this.alert} user={user} />}
+          />
+          <AuthenticatedRoute user={user} exact path='/displayinternome' render={() =>
+            <DisplayInternome alert={this.alert} user={user} />}
           />
         </main>
       </Fragment>
