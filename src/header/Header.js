@@ -7,6 +7,7 @@ const authenticatedOptions = (
   <Fragment>
     <Link to="/change-password">Change Password</Link>
     <Link to="/sign-out">Sign Out</Link>
+    <Link to="/profiles">Profiles</Link>
   </Fragment>
 )
 
