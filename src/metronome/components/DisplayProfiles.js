@@ -34,7 +34,7 @@ const DisplayProfiles = (props) => {
       <ul>
         {profilesJsx}
       </ul>
-      <Link to={'/profiles/create'}>Create New Profile</Link>
+      <Link to={'/profilecreate'}>Create New Profile</Link>
     </Fragment>
   )
 }
