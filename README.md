@@ -6,13 +6,13 @@ The best way to increase endurance in any given physical activity is via interva
 
 It is hoped that this application will remedy at least some of the this frustration. The basic idea is to have the application play metronomic clicks at increasing and decreasing tempo, allowing the practitioner to practice ruduments or patterns (or scales) to intervals to increase endurance and dexterity.
 
+In general, the user should be allowed to specify a tempo range (minimum and maximum tempo) and a duration, and the temp would be varied from low to high and back to low again via a sinusoidal function. In the future, the user should also be able to specify the number of intervals and also the interval type (sinusoid vs square wave, for example). Additionally, the intervals should be displayed so that the user can better visualize at what tempo they are playing and what they will be playing next.
+
 For more information on interval training, please visit the Wikipedia site [here](https://en.wikipedia.org/wiki/Interval_training).
 
 For more information about drumming please visit the [Percussive Arts Society](https://www.pas.org/). NOTE: ALthough a lot of their resources used to be free (to use), you now unfortunately have to be a member to utilize many of their resources.
 
 For notes about the Back End, please see the README [here](https://github.com/gbbenson68/internome-api).
-
-The client is deployed on GitHub Pages and can be found [here](https://gbbenson68.github.io/internome-client/).
 
 Relevant Links
 --------------
