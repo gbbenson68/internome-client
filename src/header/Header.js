@@ -18,11 +18,11 @@ const unauthenticatedOptions = (
   </Fragment>
 )
 
-const alwaysOptions = (
-  <Fragment>
-    <Link to="/">Home</Link>
-  </Fragment>
-)
+// const alwaysOptions = (
+//   <Fragment>
+//     <Link to="/">Home</Link>
+//   </Fragment>
+// )
 
 const Header = ({ user }) => (
   <header className="main-header">
@@ -31,7 +31,7 @@ const Header = ({ user }) => (
     <nav>
       { user && <span>Welcome, {user.email}</span>}
       { user ? authenticatedOptions : unauthenticatedOptions }
-      { alwaysOptions }
+      {/* alwaysOptions */}
     </nav>
   </header>
 )

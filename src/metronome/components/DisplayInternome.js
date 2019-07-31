@@ -1,18 +1,19 @@
-import React, { Fragment, useState, useEffect } from 'react'
-// import { Link } from 'react-router-dom'
-import { withRouter } from 'react-router-dom'
+import React, { Fragment } from 'react'
+import { withRouter, Link } from 'react-router-dom'
 
 const DisplayInternome = (props) => {
   const thisProfile = props.location.profile
   // console.log(thisProfile)
-  const [isRunning, setIsRunning] = useState(false)
+  let isRunning = false
 
-  useEffect(() => {
-    console.log(isRunning ? 'YES' : 'NO')
-    if (isRunning) {
-      runInternome()
-    }
-  }, [isRunning])
+  const startMetronome = () => {
+    isRunning = true
+    runInternome()
+  }
+
+  const stopMetronome = () => {
+    isRunning = false
+  }
 
   const runInternome = () => {
     const audioCtx = new AudioContext()
@@ -40,7 +41,9 @@ const DisplayInternome = (props) => {
       osc.onended = () => {
         osc = null
         gainNode = null
-        metronome(bpm, ++iterations)
+        if (isRunning) {
+          metronome(bpm, ++iterations)
+        }
       }
     }
 
@@ -53,8 +56,9 @@ const DisplayInternome = (props) => {
       <p>Min Tempo: {thisProfile.minTempo}</p>
       <p>Max Tempo: {thisProfile.maxTempo}</p>
       <p>Duration: {thisProfile.duration}</p>
-      <button onClick={() => setIsRunning(true)}>Start Internome</button>
-      <button onClick={() => setIsRunning(false)}>Stop Internome</button>
+      <button onClick={startMetronome}>Start Internome</button>
+      <button onClick={stopMetronome}>Stop Internome</button>
+      <Link to='/profiles'>Back to all profiles</Link>
     </Fragment>
   )
 }

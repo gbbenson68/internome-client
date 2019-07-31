@@ -3,7 +3,6 @@ import './App.scss'
 import { Route } from 'react-router-dom'
 
 import AuthenticatedRoute from './auth/components/AuthenticatedRoute'
-// import Home from './Home'
 import Header from './header/Header'
 import SignUp from './auth/components/SignUp'
 import SignIn from './auth/components/SignIn'
@@ -51,11 +50,6 @@ class App extends Component {
           </Alert>
         ))}
         <main className="container">
-          {/*
-          <Route path='/' render={() => (
-            <Home alert={this.alert} setUser={this.setUser} />
-          )} />
-          */}
           <Route path='/sign-up' render={() => (
             <SignUp alert={this.alert} setUser={this.setUser} />
           )} />

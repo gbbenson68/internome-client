@@ -31,6 +31,7 @@ const DisplayProfiles = (props) => {
 
   return (
     <Fragment>
+      <h3>Internome Profiles</h3>
       <ul>
         {profilesJsx}
       </ul>

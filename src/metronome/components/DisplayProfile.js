@@ -28,14 +28,12 @@ const DisplayProfile = (props) => {
       <p>Minimum Tempo: {profile.minTempo}</p>
       <p>Maximum Tempo: {profile.maxTempo}</p>
       <p>Duration: {profile.duration}</p>
-      {/*
       <Link to={{
         pathname: '/displayinternome',
         profile: profile
       }}>
         <button>Use Profile</button>
       </Link>
-      */}
       <Link to={`/profiles/${props.match.params.id}/update`}>
         <button>Edit</button>
       </Link>
