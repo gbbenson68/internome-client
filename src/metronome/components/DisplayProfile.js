@@ -26,27 +26,26 @@ const DisplayProfile = (props) => {
   ** ***** METRONOME CODE STARTS HERE *****
   */
   let isRunning = false
-  const startMetronome = () => {
+  const startInternome = () => {
     isRunning = true
     runInternome()
   }
 
-  const stopMetronome = () => {
+  const stopInternome = () => {
     isRunning = false
   }
 
   const runInternome = () => {
+    const AudioContext = window.AudioContext || window.webkitAudioContext
     const audioCtx = new AudioContext()
+    const execTime = audioCtx.currentTime
     const freq = 880
     const zero = 0.00001
+    const beatLength = 1
+    const elapsedTime = 0
 
-    const metronome = (bpm = 60, iterations = 1) => {
+    const playClick = (audioCtx, elapsedTime, beatLength, lastTime) => {
       const now = audioCtx.currentTime
-      // const beatsPerSecond = bpm / 60.0
-      // const quarterBeatsPerBar = 4
-      // const beatsPerBar = beatsPerSecond * quarterBeatsPerBar
-      // const beatLength = quarterBeatsPerBar / beatsPerBar
-      const beatLength = 60 / bpm
       let gainNode = audioCtx.createGain()
       let osc = audioCtx.createOscillator()
       gainNode.connect(audioCtx.destination)
@@ -62,12 +61,12 @@ const DisplayProfile = (props) => {
         osc = null
         gainNode = null
         if (isRunning) {
-          metronome(bpm, ++iterations)
+          playClick(audioCtx, elapsedTime + beatLength, beatLength, now)
         }
       }
     }
 
-    metronome(60, 0)
+    playClick(audioCtx, elapsedTime, beatLength, execTime)
   }
   /*
   ** ***** METRONOME CODE ENDS HERE *****
@@ -85,8 +84,8 @@ const DisplayProfile = (props) => {
       <Link to={`/profiles/${props.match.params.id}/delete`} user={props.user}>
         <button>Delete</button>
       </Link>
-      <button onClick={startMetronome}>Start Internome</button>
-      <button onClick={stopMetronome}>Stop Internome</button>
+      <button onClick={startInternome}>Start Internome</button>
+      <button onClick={stopInternome}>Stop Internome</button>
       <Link to='/profiles'>Back to all profiles</Link>
     </Fragment>
   )
