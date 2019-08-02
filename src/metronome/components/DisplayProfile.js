@@ -6,67 +6,82 @@ import messages from '../messages'
 
 const DisplayProfile = (props) => {
   const [profile, setProfile] = useState({})
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [isRunning, setIsRunning] = useState(false)
   // console.log(props)
 
   useEffect(() => {
-    axios({
-      url: `${apiUrl}/profiles/${props.match.params.id}`,
-      method: 'GET',
-      headers: { 'Authorization': `Bearer ${props.user.token}` }
-    })
-      .then(response => setProfile(response.data.profile))
-      .catch(error => {
-        console.error(error)
-        props.alert(messages.showProfileFailure, 'danger')
-        setProfile({})
+    if (!isLoaded) {
+      axios({
+        url: `${apiUrl}/profiles/${props.match.params.id}`,
+        method: 'GET',
+        headers: { 'Authorization': `Bearer ${props.user.token}` }
       })
+        .then(response => setProfile(response.data.profile))
+        .catch(error => {
+          console.error(error)
+          props.alert(messages.showProfileFailure, 'danger')
+          setProfile({})
+        })
+
+      setIsLoaded(true)
+    }
+
+    // Emulate componentWillUnmount() lifecycle method
+    return () => {
+      setIsRunning(false)
+      setIsLoaded(false)
+    }
   }, [])
 
   /*
   ** ***** METRONOME CODE STARTS HERE *****
   */
-  let isRunning = false
+  // let isRunning = false // Specifies if Internome is running
+  // const clickArray = [] // Array of beat lengths, gain & oscillator nodes
   const startInternome = () => {
-    isRunning = true
+    setIsRunning(true)
     runInternome()
   }
 
   const stopInternome = () => {
-    isRunning = false
+    setIsRunning(false)
+  }
+
+  const playClick = (audioCtx, elapsedTime, beatLength, lastTime, freq, zero) => {
+    console.log(isRunning)
+    const now = audioCtx.currentTime
+    let gainNode = audioCtx.createGain()
+    let osc = audioCtx.createOscillator()
+    gainNode.connect(audioCtx.destination)
+    osc.connect(gainNode)
+
+    gainNode.gain.exponentialRampToValueAtTime(zero, now + beatLength / 16)
+
+    osc.frequency.value = freq
+    osc.start(now)
+    osc.stop(now + beatLength)
+
+    osc.onended = () => {
+      osc = null
+      gainNode = null
+      if (isRunning) {
+        playClick(audioCtx, elapsedTime + beatLength, beatLength, now, freq, zero)
+      }
+    }
   }
 
   const runInternome = () => {
+    // For browser compatibility
     const AudioContext = window.AudioContext || window.webkitAudioContext
     const audioCtx = new AudioContext()
     const execTime = audioCtx.currentTime
     const freq = 880
     const zero = 0.00001
-    const beatLength = 1
+    const beatLength = 60 / profile.minTempo
     const elapsedTime = 0
 
-    const playClick = (audioCtx, elapsedTime, beatLength, lastTime) => {
-      const now = audioCtx.currentTime
-      let gainNode = audioCtx.createGain()
-      let osc = audioCtx.createOscillator()
-      gainNode.connect(audioCtx.destination)
-      osc.connect(gainNode)
-
-      gainNode.gain.exponentialRampToValueAtTime(zero, now + beatLength / 16)
-
-      osc.frequency.value = freq
-      osc.start(now)
-      osc.stop(now + beatLength)
-
-      osc.onended = () => {
-        osc = null
-        gainNode = null
-        if (isRunning) {
-          playClick(audioCtx, elapsedTime + beatLength, beatLength, now)
-        }
-      }
-    }
-
-    playClick(audioCtx, elapsedTime, beatLength, execTime)
+    playClick(audioCtx, elapsedTime, beatLength, execTime, freq, zero)
   }
   /*
   ** ***** METRONOME CODE ENDS HERE *****
