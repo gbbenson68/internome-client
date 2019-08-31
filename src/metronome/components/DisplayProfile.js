@@ -4,6 +4,8 @@ import apiUrl from '../../apiConfig'
 import axios from 'axios'
 import messages from '../messages'
 
+import { withSnackbar } from 'notistack'
+
 const DisplayProfile = (props) => {
   const [profile, setProfile] = useState({})
   const [isLoaded, setIsLoaded] = useState(false)
@@ -20,7 +22,7 @@ const DisplayProfile = (props) => {
         .then(response => setProfile(response.data.profile))
         .catch(error => {
           console.error(error)
-          props.alert(messages.showProfileFailure, 'danger')
+          props.enqueueSnackbar(messages.showProfileFailure, { variant: 'error' })
           setProfile({})
         })
 
@@ -106,4 +108,4 @@ const DisplayProfile = (props) => {
   )
 }
 
-export default withRouter(DisplayProfile)
+export default withSnackbar(withRouter(DisplayProfile))

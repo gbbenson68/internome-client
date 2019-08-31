@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import './App.scss'
 import { Route } from 'react-router-dom'
 
@@ -15,15 +15,14 @@ import CreateProfile from './metronome/components/CreateProfile'
 import DeleteProfile from './metronome/components/DeleteProfile'
 import UpdateProfile from './metronome/components/UpdateProfile'
 
-import Alert from 'react-bootstrap/Alert'
+import { SnackbarProvider } from 'notistack'
 
 class App extends Component {
   constructor () {
     super()
 
     this.state = {
-      user: null,
-      alerts: []
+      user: null
     }
   }
 
@@ -31,53 +30,42 @@ class App extends Component {
 
   clearUser = () => this.setState({ user: null })
 
-  alert = (message, type) => {
-    this.setState({ alerts: [...this.state.alerts, { message, type }] })
-  }
-
   render () {
-    const { alerts, user } = this.state
+    const { user } = this.state
 
     return (
-      <Fragment>
+      <SnackbarProvider maxSnack={3}>
         <Header user={user} />
-        {alerts.map((alert, index) => (
-          <Alert key={index} dismissible variant={alert.type}>
-            <Alert.Heading>
-              {alert.message}
-            </Alert.Heading>
-          </Alert>
-        ))}
-        <main className="container">
+        <main>
           <Route path='/sign-up' render={() => (
-            <SignUp alert={this.alert} setUser={this.setUser} />
+            <SignUp setUser={this.setUser} />
           )} />
           <Route path='/sign-in' render={() => (
-            <SignIn alert={this.alert} setUser={this.setUser} />
+            <SignIn setUser={this.setUser} />
           )} />
           <AuthenticatedRoute user={user} path='/sign-out' render={() => (
-            <SignOut alert={this.alert} clearUser={this.clearUser} user={user} />
+            <SignOut clearUser={this.clearUser} user={user} />
           )} />
           <AuthenticatedRoute user={user} path='/change-password' render={() => (
-            <ChangePassword alert={this.alert} user={user} />
+            <ChangePassword user={user} />
           )} />
           <AuthenticatedRoute user={user} exact path='/profilecreate' render={() =>
-            <CreateProfile alert={this.alert} user={user} />}
+            <CreateProfile user={user} />}
           />
           <AuthenticatedRoute user={user} exact path='/profiles/:id/delete' render={() =>
-            <DeleteProfile alert={this.alert} user={user} />}
+            <DeleteProfile user={user} />}
           />
           <AuthenticatedRoute user={user} exact path='/profiles/:id/update' render={() =>
-            <UpdateProfile alert={this.alert} user={user} />}
+            <UpdateProfile user={user} />}
           />
           <AuthenticatedRoute user={user} exact path='/profiles/:id' render={() =>
-            <DisplayProfile alert={this.alert} user={user} />}
+            <DisplayProfile user={user} />}
           />
           <AuthenticatedRoute user={user} exact path='/profiles' render={() =>
-            <DisplayProfiles alert={this.alert} user={user} />}
+            <DisplayProfiles user={user} />}
           />
         </main>
-      </Fragment>
+      </SnackbarProvider>
     )
   }
 }

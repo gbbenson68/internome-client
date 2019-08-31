@@ -4,6 +4,8 @@ import { withRouter } from 'react-router-dom'
 import { signUp, signIn } from '../api'
 import messages from '../messages'
 
+import { withSnackbar } from 'notistack'
+
 class SignUp extends Component {
   constructor () {
     super()
@@ -22,17 +24,17 @@ class SignUp extends Component {
   onSignUp = event => {
     event.preventDefault()
 
-    const { alert, history, setUser } = this.props
+    const { enqueueSnackbar, history, setUser } = this.props
 
     signUp(this.state)
       .then(() => signIn(this.state))
       .then(res => setUser(res.data.user))
-      .then(() => alert(messages.signUpSuccess, 'success'))
+      .then(() => enqueueSnackbar(messages.signUpSuccess, { variant: 'success' }))
       .then(() => history.push('/profiles'))
       .catch(error => {
         console.error(error)
         this.setState({ email: '', password: '', passwordConfirmation: '' })
-        alert(messages.signUpFailure, 'danger')
+        enqueueSnackbar(messages.signUpFailure, { variant: 'error' })
       })
   }
 
@@ -76,4 +78,4 @@ class SignUp extends Component {
   }
 }
 
-export default withRouter(SignUp)
+export default withSnackbar(withRouter(SignUp))

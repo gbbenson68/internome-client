@@ -4,9 +4,10 @@ import apiUrl from '../../apiConfig'
 import axios from 'axios'
 import messages from '../messages'
 
+import { withSnackbar } from 'notistack'
+
 const DisplayProfiles = (props) => {
   const [profiles, setProfiles] = useState([])
-  // console.log(props.alert)
   // console.log(props.user.token)
 
   useEffect(() => {
@@ -18,7 +19,7 @@ const DisplayProfiles = (props) => {
       .then(response => setProfiles(response.data.profiles))
       .catch(error => {
         console.error(error)
-        props.alert(messages.listProfilesFailure, 'danger')
+        props.enqueueSnackbar(messages.listProfilesFailure, { variant: 'error' })
         setProfiles([])
       })
   }, [])
@@ -40,4 +41,4 @@ const DisplayProfiles = (props) => {
   )
 }
 
-export default DisplayProfiles
+export default withSnackbar(DisplayProfiles)

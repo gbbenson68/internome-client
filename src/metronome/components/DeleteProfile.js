@@ -4,6 +4,8 @@ import apiUrl from '../../apiConfig'
 import axios from 'axios'
 import messages from '../messages'
 
+import { withSnackbar } from 'notistack'
+
 const DeleteProfile = (props) => {
   useEffect(() => {
     axios({
@@ -11,10 +13,10 @@ const DeleteProfile = (props) => {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${props.user.token}` }
     })
-      .then(() => props.alert(messages.deleteProfileSuccess, 'success'))
+      .then(() => props.enqueueSnackbar(messages.deleteProfileSuccess, { variant: 'success' }))
       .catch(error => {
         console.error(error)
-        props.alert(messages.deleteProfileFailure, 'danger')
+        props.enqueueSnackbar(messages.deleteProfileFailure, { variant: 'error' })
       })
   }, [])
 
@@ -25,4 +27,4 @@ const DeleteProfile = (props) => {
   )
 }
 
-export default withRouter(DeleteProfile)
+export default withSnackbar(withRouter(DeleteProfile))

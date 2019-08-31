@@ -4,6 +4,8 @@ import apiUrl from '../../apiConfig'
 import axios from 'axios'
 import messages from '../messages'
 
+import { withSnackbar } from 'notistack'
+
 const UpdateProfile = (props) => {
   // NOTE: We need to set the COMPLETE list of properties here or else
   //       React thinks that the individual properties are uncontrolled!!
@@ -23,7 +25,7 @@ const UpdateProfile = (props) => {
       .then(response => setProfile(response.data.profile))
       .catch(error => {
         console.error(error)
-        props.alert(messages.showProfileFailure, 'danger')
+        props.enqueueSnackbar(messages.showProfileFailure, { variant: 'error' })
         setProfile({})
       })
   }, [])
@@ -41,10 +43,10 @@ const UpdateProfile = (props) => {
       data: { profile: profile }
     })
       .then(response => props.history.push(`/profiles/${profile._id}`))
-      .then(() => props.alert(messages.updateProfileSuccess, 'success'))
+      .then(() => props.enqueueSnackbar(messages.updateProfileSuccess, { variant: 'success' }))
       .catch(error => {
         console.error(error)
-        props.alert(messages.updateProfileFailure, 'danger')
+        props.enqueueSnackbar(messages.updateProfileFailure, { variant: 'error' })
         setProfile({})
       })
   }
@@ -107,4 +109,4 @@ const UpdateProfile = (props) => {
   )
 }
 
-export default withRouter(UpdateProfile)
+export default withSnackbar(withRouter(UpdateProfile))
