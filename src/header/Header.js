@@ -1,7 +1,60 @@
 import React, { Fragment } from 'react'
 import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 
-import './Header.scss'
+const HeaderStyle = styled.header`
+  align-items: center;
+  /* border-bottom: 1px solid $charcoal; */
+  display: flex;
+  height: 100px;
+  padding: 0 20px;
+
+  a,
+  span {
+    font-size: 1.2em;
+    margin: 0 15px;
+    text-decoration: none;
+  }
+
+  a {
+    color: green;
+  }
+
+  > nav {
+    align-items: center;
+    display: flex;
+    flex-grow: 1;
+    justify-content: flex-end;
+  }
+
+  @media (max-width: 600px) {
+    .main-header {
+      flex-direction: column;
+      font-size: .7em;
+      height: auto;
+      padding: 10px;
+
+      h1 {
+        font-size: 2.5em;
+      }
+    }
+  }
+
+  @media (max-width: 450px) {
+    .main-header > nav {
+      flex-direction: column;
+      width: 100%;
+
+      a,
+      span {
+        border: 1px solid $charcoal;
+        margin-bottom: 5px;
+        text-align: center;
+        width: 80%;
+      }
+    }
+  }
+`
 
 const authenticatedOptions = (
   <Fragment>
@@ -25,7 +78,7 @@ const unauthenticatedOptions = (
 // )
 
 const Header = ({ user }) => (
-  <header className="main-header">
+  <HeaderStyle>
     <h1>Internome</h1>
     <span><h5>The Interval-based Metronome</h5></span>
     <nav>
@@ -33,7 +86,7 @@ const Header = ({ user }) => (
       { user ? authenticatedOptions : unauthenticatedOptions }
       {/* alwaysOptions */}
     </nav>
-  </header>
+  </HeaderStyle>
 )
 
 export default Header
